@@ -88,7 +88,7 @@ Game::Game(Size field_size)
       cooky(0),
       scr(0),
       over(false),
-      mt(3)
+      mt(2)
 {
   new_cookie();
 }

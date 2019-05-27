@@ -1,8 +1,6 @@
 #include "gif.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
 
@@ -639,6 +637,7 @@ Extension create_animation_mark(uint16_t replays) {
 
 Extension create_delay_mark(uint16_t delay) {
   Extension res(Extension::graphics);
+  delay += 2;
   res.append({4, lo_byte(delay), hi_byte(delay), 0});
   return res;
 }

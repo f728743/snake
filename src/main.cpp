@@ -18,12 +18,15 @@ void generate_gif(const Size& sz, size_t max_frames) {
   GameAI ai(game);
   GameRender r(game);
 
-  size_t c = 0;
+  int max_score = sz.area() - 3;
+  int max_delay = 15;
+  int c = 0;
   do {
     if (c++ > max_frames) {
       break;
     }
-    r.draw_frame(0);
+    int delay = double(max_score -  game.score()) / max_score * max_delay;
+    r.draw_frame(delay);
     ai.next_move();
   } while (!game.is_over());
 
@@ -32,11 +35,9 @@ void generate_gif(const Size& sz, size_t max_frames) {
   r.save(dev);
 }
 
-using namespace std::chrono;
-
 struct Params {
-  Size field_size = {4, 3};
-  size_t max_frames = 3000;
+  Size field_size = {13, 8};
+  int max_frames = 3000;
 
   void parse(int argc, char** argv) {
     std::string args;
@@ -60,10 +61,6 @@ struct Params {
 int main(int argc, char** argv) {
   Params params;
   params.parse(argc, argv);
-  auto start = high_resolution_clock::now();
   generate_gif(params.field_size, params.max_frames);
-  auto stop = high_resolution_clock::now();
-  std::cout << "Completed in "
-            << duration_cast<milliseconds>(stop - start).count() << "ms\n";
   return 0;
 }

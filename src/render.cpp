@@ -189,7 +189,6 @@ void GameRender::create_separate_image() {
   gif.append(std::move(img));
 
   sprintf(filename, "out%04lu.gif", frame_count);
-  // printf("%s\n", filename);
   gif::FileDevice dev(filename);
   if (dev.open(gif::FileDevice::write_only)) {
     gif.save(dev);
@@ -200,9 +199,6 @@ void GameRender::save(gif::FileDevice &file) { gif.save(file); }
 
 void GameRender::draw_frame(int delay) {
   scheme.update();
-  // if (frame_count > 1950) {
-  //  create_separate_image();  // TODO: remove
-  // }
   auto img = create_game_frame();
   set_image_show_time(*img, delay);
   gif.append(std::move(img));
